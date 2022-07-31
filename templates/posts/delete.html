@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <br>
+    <h3>Eliminando: {{ post.title }}</h3>
+    <div class="form-group">
+        <form method="post">
+            {% csrf_token %}
+            <strong> Desea continuar?</strong>
+            <br>
+            <button type="submit" class="btn btn-danger">Si, Eliminar
+            </button>
+        </form>
+    </div>
+{% endblock %}

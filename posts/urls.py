@@ -1,26 +1,14 @@
-"""Posts URLs."""
-
-# Django
 from django.urls import path
+from posts.views import *
 
-# Views
-from posts import views
 app_name = 'posts'
 
 urlpatterns = [
-    path(
-        route='',
-        view=views.PostsFeedView.as_view(),
-        name='blog'
-    ),
-    path(
-        route='posts/<slug:url>/',
-        view=views.PostDetailView.as_view(),
-        name='detail'
-    ),
-    path(
-        route='posts/save_comment',
-        view=views.save_comment,
-        name='save_comment'
-    ),
+    path('', PostsFeedView.as_view(), name='blog'),
+    path('posts/add/', AddPostView.as_view(), name='add_post'),
+    path('posts/edit/<int:pk>',UpdatePostView.as_view(),name='edit_post'),
+    path('posts/remove/<int:pk>/', DeletePostView.as_view(), name='delete_post'),
+    path('posts/detail/<slug:url>/', PostDetailView.as_view(), name='detail'),
+    path('posts/save_comment', save_comment, name='save_comment'),
+
 ]

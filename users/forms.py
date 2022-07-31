@@ -4,25 +4,12 @@ from users.models import Profile
 
 
 class SignupForm(forms.Form):
-    email = forms.CharField(
-        min_length=6,
-        max_length=70,
-        widget=forms.EmailInput()
-    )
-    username = forms.CharField(
-        min_length=6,
-        max_length=70,
-        widget=forms.TextInput()
-    )
-    password = forms.CharField(
-        max_length=70,
-        widget=forms.PasswordInput()
-    )
-    password_confirmation = forms.CharField(
-        max_length=70,
-        widget=forms.PasswordInput()
-    )
+    email = forms.CharField(min_length=6, max_length=70, widget=forms.EmailInput())
+    username = forms.CharField(min_length=6, max_length=70, widget=forms.TextInput())
+    password = forms.CharField(max_length=70, widget=forms.PasswordInput())
+    password_confirmation = forms.CharField(max_length=70, widget=forms.PasswordInput())
 
+    ''' Este método se utiliza para limpiar y validar campos que dependen unos de otros '''
     def clean(self):
         cleaned_data = super().clean()
         password = cleaned_data.get('password')
@@ -33,10 +20,9 @@ class SignupForm(forms.Form):
 
     def save(self):
         data = self.cleaned_data
-        print(data )
+        '''Elimina password_confirmation'''
         data.pop('password_confirmation')
         user = User.objects.create_user(**data)
-        print(user)
+        ##CREA EL PERFIL, USER CREA EL USUARIO EN EL ADMIN DE DJANGO
         profile = Profile(user=user)
-        print(profile)
         profile.save()
